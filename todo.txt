@@ -1,0 +1,15 @@
+todo.txt
+
+comments in piece & piece subclasses
+change (void)isCapture (see bishop.cpp)
+
+change canBeBlocked? maybe?
+
+getPathPositions rather than canBeBlocked
+canBeBlocked is just duplication
+
+
+// isMoveLegal() is only called by hasValidMoves()
+// hasValidMoves() checks all possible destination squares
+// we can restrict the search space by returning
+// a vector of positions
