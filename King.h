@@ -4,53 +4,33 @@
 #include "Piece.h"
 
 /**
- * @brief Class representing a King chess piece.
- * 
- * Kings can move one square in any direction.
- * They can also castle if certain conditions are met.
+ * @brief Class for kings. They can move one square in any direction, 
+ * and can castle with rooks.
  */
 class King : public Piece {
 public:
-    /**
-     * @brief Constructor for King.
-     * @param c The colour of the king.
-     */
+    /** @copydoc Piece::Piece */
     King(Colour c);
     
     /** @copydoc Piece::~Piece() */
     ~King() override;
     
-    /**
-     * @brief Gets the name of the piece.
-     * @return "King".
-     */
-    std::string getName() const override;
+    /** @copydoc Piece::getName */
+    std::string getName() const override {return "King";}
 
-    /**
-     * @brief Checks if the king can move from start to end position.
-     * 
-     * This includes both normal king moves (one square) and castling (two squares horizontally).
-     * 
-     * @param start The starting position.
-     * @param end The ending position.
-     * @param isCapture True if there's an enemy piece at the end position.
-     * @return True if the movement pattern is valid for a king.
-     */
+    /** @copydoc Piece::validMoveDir */
     bool validMoveDir(const Position& start, const Position& end, bool isCapture) const override;
     
-    /**
-     * @brief Kings cannot be blocked for normal moves.
-     * @return False.
-     */
+    /** @copydoc Piece::canBeBlocked */
     bool canBeBlocked() const override {return false;}
     
     /**
-     * @brief Checks if the move is a castling attempt.
+     * @brief Checks if the given move is a castling attempt.
      * @param start The starting position.
      * @param end The ending position.
-     * @return True if the king is trying to castle (moving 2 squares horizontally).
+     * @return True if the king is trying to castle, false otherwise.
      */
     bool isCastlingMove(const Position& start, const Position& end) const;
 };
 
-#endif // KING_H
+#endif

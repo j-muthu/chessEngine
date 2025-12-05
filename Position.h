@@ -5,7 +5,6 @@
 
 /**
  * @brief Struct representing a position (file, rank) on the chess board.
- * 
  * Contains 2 integers 0-7 representing the position's file 
  * (column, corresponding to A-H) and rank (row, corresponding to 1-8).
  */

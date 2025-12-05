@@ -24,7 +24,7 @@ public:
      * @brief Gets the name of the piece.
      * @return "Rook".
      */
-    std::string getName() const override;
+    std::string getName() const override {return "Rook";}
     
     /**
      * @brief Checks if the rook can move from start to end position.

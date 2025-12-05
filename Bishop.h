@@ -4,8 +4,7 @@
 #include "Piece.h"
 
 /**
- * @brief Class representing a Bishop chess piece. 
- * Bishops can move any number of squares diagonally.
+ * @brief Class representing bishops. They move diagonally.
  */
 class Bishop : public Piece {
 public:
@@ -26,4 +25,4 @@ public:
     bool canBeBlocked() const override {return true;}
 };
 
-#endif // BISHOP_H
+#endif

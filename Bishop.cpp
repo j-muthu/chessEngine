@@ -11,6 +11,6 @@ bool Bishop::validMoveDir(const Position& start, const Position& end, bool) cons
     int fileDiff = std::abs(end.file - start.file);
     int rankDiff = std::abs(end.rank - start.rank);
     
-    // Bishop moves diagonally: equal change in file and rank, and at least one square
+    // Bishop moves diagonally.
     return fileDiff == rankDiff && fileDiff > 0;
 }

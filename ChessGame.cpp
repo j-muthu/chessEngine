@@ -378,6 +378,9 @@ void ChessGame::loadState(const string& fen) {
     int file = 0;
     int rank = 7;  // FEN string starts from highest rank (index 7).
     for (char c : piecePlacement) {
+        /* generate position struct and 
+        then use that to set the pawn's hasMoved var
+        */
         if (c == '/') {
             file = 0;
             --rank;

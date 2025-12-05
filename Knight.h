@@ -4,42 +4,25 @@
 #include "Piece.h"
 
 /**
- * @brief Class representing a Knight chess piece.
- * 
- * Knights move in an L-shape: two squares in one direction and one square
- * perpendicular to that. Knights can leap over other pieces.
+ * @brief Class representing knights. The move in an L-shape
+ * and can jump over other pieces.
  */
 class Knight : public Piece {
 public:
-    /**
-     * @brief Constructor for Knight.
-     * @param c The colour of the knight.
-     */
+    /** @copydoc Piece::Piece */
     Knight(Colour c);
     
-    /** @copydoc Piece::~Piece() */
+    /** @copydoc Piece::~Piece */
     ~Knight() override;
     
-    /**
-     * @brief Gets the name of the piece.
-     * @return "Knight".
-     */
-    std::string getName() const override;
+    /** @copydoc Piece::getName */
+    std::string getName() const override {return "Knight";}
 
-    /**
-     * @brief Checks if the knight can move from start to end position.
-     * @param start The starting position.
-     * @param end The ending position.
-     * @param isCapture True if there's an enemy piece at the end position (not used for knight).
-     * @return True if the movement pattern is valid for a knight.
-     */
+    /** @copydoc Piece::validMoveDir */
     bool validMoveDir(const Position& start, const Position& end, bool isCapture) const override;
     
-    /**
-     * @brief Knights cannot be blocked (they leap over pieces).
-     * @return False.
-     */
+    /** @copydoc Piece::canBeBlocked */
     bool canBeBlocked() const override {return false;}
 };
 
-#endif // KNIGHT_H
+#endif
