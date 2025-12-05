@@ -39,19 +39,7 @@ public:
      * @brief Queens can be blocked.
      * @return True.
      */
-    bool canBeBlocked() const override;
-    
-    /**
-     * @brief Gets all possible move directions for a queen.
-     * @return Vector of direction pairs (all 8 directions).
-     */
-    std::vector<std::pair<int, int>> getMoveDirections() const override;
-    
-    /**
-     * @brief Queens are sliding pieces.
-     * @return True.
-     */
-    bool isSliding() const override;
+    bool canBeBlocked() const override {return true;}
 };
 
 #endif // QUEEN_H

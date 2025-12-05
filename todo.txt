@@ -3,13 +3,15 @@ todo.txt
 comments in piece & piece subclasses
 change (void)isCapture (see bishop.cpp)
 
-change canBeBlocked? maybe?
-
-getPathPositions rather than canBeBlocked
-canBeBlocked is just duplication
-
-
 // isMoveLegal() is only called by hasValidMoves()
 // hasValidMoves() checks all possible destination squares
 // we can restrict the search space by returning
 // a vector of positions
+
+// use getMoveDirections to iterate across each specific
+// direction a piece can legally move in
+// until it hits an allied piece
+// or until (and including) it hits an enemy piece
+// make it more polymorphic?
+
+// change validMoveDir to just use absFileDiff

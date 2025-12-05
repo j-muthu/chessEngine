@@ -4,10 +4,8 @@
 #include "Piece.h"
 
 /**
- * @brief Class representing a Bishop chess piece.
- * 
- * Bishops can move any number of squares diagonally,
- * but cannot leap over other pieces.
+ * @brief Class representing a Bishop chess piece. 
+ * Bishops can move any number of squares diagonally.
  */
 class Bishop : public Piece {
 public:
@@ -25,19 +23,7 @@ public:
         bool isCapture) const override;
     
     /** @copydoc Piece::canBeBlocked */
-    bool canBeBlocked() const override;
-    
-    /**
-     * @brief Gets all possible move directions for a bishop.
-     * @return Vector of direction pairs (all diagonals).
-     */
-    std::vector<std::pair<int, int>> getMoveDirections() const override;
-    
-    /**
-     * @brief Bishops are sliding pieces.
-     * @return True.
-     */
-    bool isSliding() const override;
+    bool canBeBlocked() const override {return true;}
 };
 
 #endif // BISHOP_H

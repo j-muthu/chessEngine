@@ -36,27 +36,3 @@ bool Rook::validMoveDir(const Position& start, const Position& end, bool isCaptu
     // One must be zero, the other non-zero
     return (fileDiff == 0 && rankDiff != 0) || (fileDiff != 0 && rankDiff == 0);
 }
-
-/**
- * @brief Rooks can be blocked.
- * @return True.
- */
-bool Rook::canBeBlocked() const {
-    return true;
-}
-
-/**
- * @brief Gets all possible move directions for a rook.
- * @return Vector of direction pairs (horizontal and vertical).
- */
-std::vector<std::pair<int, int>> Rook::getMoveDirections() const {
-    return {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-}
-
-/**
- * @brief Rooks are sliding pieces.
- * @return True.
- */
-bool Rook::isSliding() const {
-    return true;
-}

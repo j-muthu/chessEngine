@@ -42,19 +42,7 @@ public:
      * @brief Kings cannot be blocked for normal moves.
      * @return False.
      */
-    bool canBeBlocked() const override;
-    
-    /**
-     * @brief Gets all possible move directions for a king.
-     * @return Vector of direction pairs (all 8 adjacent squares).
-     */
-    std::vector<std::pair<int, int>> getMoveDirections() const override;
-    
-    /**
-     * @brief Kings are not sliding pieces.
-     * @return False.
-     */
-    bool isSliding() const override;
+    bool canBeBlocked() const override {return false;}
     
     /**
      * @brief Checks if the move is a castling attempt.

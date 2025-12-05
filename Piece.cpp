@@ -13,11 +13,3 @@ ostream& operator<<(ostream& os, const Colour& c) {
 Piece::Piece(Colour c) : colour(c), hasMoved(false) {}
 
 Piece::~Piece() {}
-
-/**
- * @brief Gets the colour name as a string.
- * @return "White" or "Black".
- */
-string Piece::getColourName() const {
-    return (colour == Colour::WHITE) ? "White" : "Black";
-}

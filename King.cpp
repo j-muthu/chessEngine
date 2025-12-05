@@ -49,39 +49,6 @@ bool King::validMoveDir(const Position& start, const Position& end, bool isCaptu
     return false;
 }
 
-/**
- * @brief Kings cannot be blocked for normal moves.
- * @return False.
- */
-bool King::canBeBlocked() const {
-    return false;
-}
-
-/**
- * @brief Gets all possible move directions for a king.
- * @return Vector of direction pairs (all 8 adjacent squares).
- */
-std::vector<std::pair<int, int>> King::getMoveDirections() const {
-    return {
-        {0, 1}, {0, -1}, {1, 0}, {-1, 0},
-        {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
-    };
-}
-
-/**
- * @brief Kings are not sliding pieces.
- * @return False.
- */
-bool King::isSliding() const {
-    return false;
-}
-
-/**
- * @brief Checks if the move is a castling attempt.
- * @param start The starting position.
- * @param end The ending position.
- * @return True if the king is trying to castle (moving 2 squares horizontally).
- */
 bool King::isCastlingMove(const Position& start, const Position& end) const {
     int fileDiff = std::abs(end.file - start.file);
     int rankDiff = std::abs(end.rank - start.rank);

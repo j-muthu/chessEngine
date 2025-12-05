@@ -465,7 +465,7 @@ void ChessGame::submitMove(const string& startStr, const string& endStr) {
     }
     
     if (piece->getColour() != activeColour) {
-        cerr << "It is not " << piece->getColourName() 
+        cerr << "It is not " << piece->getColour() 
         << "'s turn to move!" << endl;
         return;
     }
@@ -479,18 +479,18 @@ void ChessGame::submitMove(const string& startStr, const string& endStr) {
     // with separate checks for castling and non-castling moves.
     if ((!isCastling && !moveValidityChecks(start, end)) ||
     (isCastling && !isValidCastling(start, end, kingside))) {
-        cerr << piece->getColourName() << "'s " << piece->getName() 
+        cerr << piece->getColour() << "'s " << piece->getName() 
                 << " cannot move to " << end << "!" << endl;
         return;
     }
     
     // Output the move.
-    cout << piece->getColourName() << "'s " << piece->getName() 
+    cout << piece->getColour() << "'s " << piece->getName() 
             << " moves from " << start << " to " 
             << end;
     Piece* targetPiece = getPieceAtPos(end);
     if (targetPiece) {
-        cout << " taking " << targetPiece->getColourName() 
+        cout << " taking " << targetPiece->getColour() 
         << "'s " << targetPiece->getName();
     } else if (isCastling) {
         cout << " castling";

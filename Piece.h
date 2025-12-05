@@ -89,28 +89,6 @@ public:
      * @return True if the piece's path can be blocked, false otherwise.
      */
     virtual bool canBeBlocked() const = 0;
-    
-    /**
-     * @brief Gets all possible move directions for this piece type.
-     * 
-     * Returns a vector of (file_delta, rank_delta) pairs representing
-     * the directions this piece can move. Used for checking attacks.
-     * 
-     * @return Vector of direction pairs.
-     */
-    virtual std::vector<std::pair<int, int>> getMoveDirections() const = 0;
-    
-    /**
-     * @brief Checks if this piece type can move multiple squares in one direction.
-     * @return True for sliding pieces (Rook, Bishop, Queen), false otherwise.
-     */
-    virtual bool isSliding() const = 0;
-    
-    /**
-     * @brief Gets the colour name as a string.
-     * @return "White" or "Black".
-     */
-    std::string getColourName() const;
 };
 
 #endif // PIECE_H

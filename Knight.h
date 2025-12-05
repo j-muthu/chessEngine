@@ -39,19 +39,7 @@ public:
      * @brief Knights cannot be blocked (they leap over pieces).
      * @return False.
      */
-    bool canBeBlocked() const override;
-    
-    /**
-     * @brief Gets all possible move directions for a knight.
-     * @return Vector of direction pairs (all L-shaped moves).
-     */
-    std::vector<std::pair<int, int>> getMoveDirections() const override;
-    
-    /**
-     * @brief Knights are not sliding pieces.
-     * @return False.
-     */
-    bool isSliding() const override;
+    bool canBeBlocked() const override {return false;}
 };
 
 #endif // KNIGHT_H

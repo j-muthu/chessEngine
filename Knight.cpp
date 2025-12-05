@@ -36,30 +36,3 @@ bool Knight::validMoveDir(const Position& start, const Position& end, bool isCap
     // Knight moves in L-shape: 2 squares one way, 1 square perpendicular
     return (fileDiff == 2 && rankDiff == 1) || (fileDiff == 1 && rankDiff == 2);
 }
-
-/**
- * @brief Knights cannot be blocked (they leap over pieces).
- * @return False.
- */
-bool Knight::canBeBlocked() const {
-    return false;
-}
-
-/**
- * @brief Gets all possible move directions for a knight.
- * @return Vector of direction pairs (all L-shaped moves).
- */
-std::vector<std::pair<int, int>> Knight::getMoveDirections() const {
-    return {
-        {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
-        {1, 2}, {1, -2}, {-1, 2}, {-1, -2}
-    };
-}
-
-/**
- * @brief Knights are not sliding pieces.
- * @return False.
- */
-bool Knight::isSliding() const {
-    return false;
-}

@@ -1,37 +1,30 @@
-chess: ChessMain.o ChessGame.o Position.o Piece.o Pawn.o Rook.o Knight.o Bishop.o Queen.o King.o
-	g++ -Wall -g ChessMain.o ChessGame.o Position.o Piece.o Pawn.o Rook.o Knight.o Bishop.o Queen.o King.o -o chess
+CXX = g++
+# -MMD manually looks at #include statements and generates dependency files
+# based on the included header files
+CXXFLAGS = -Wall -g -MMD
+TARGET = chess
 
-ChessMain.o: ChessMain.cpp ChessGame.h
-	g++ -Wall -g -c ChessMain.cpp
+# source files
+SRCS = ChessMain.cpp ChessGame.cpp Position.cpp Piece.cpp Pawn.cpp \
+       Rook.cpp Knight.cpp Bishop.cpp Queen.cpp King.cpp
 
-ChessGame.o: ChessGame.cpp ChessGame.h Piece.h Position.h Pawn.h Rook.h Knight.h Bishop.h Queen.h King.h
-	g++ -Wall -g -c ChessGame.cpp
+# generating object file names from source files (.cpp -> .o)
+OBJS = $(SRCS:.cpp=.o)
 
-Position.o: Position.cpp Position.h
-	g++ -Wall -g -c Position.cpp
+# $@ - target name
+# $^ - all prerequisites
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
-Piece.o: Piece.cpp Piece.h Position.h
-	g++ -Wall -g -c Piece.cpp
+# compiling source files to object files
+# $< - first prerequisite (source file)
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-Pawn.o: Pawn.cpp Pawn.h Piece.h Position.h
-	g++ -Wall -g -c Pawn.cpp
-
-Rook.o: Rook.cpp Rook.h Piece.h Position.h
-	g++ -Wall -g -c Rook.cpp
-
-Knight.o: Knight.cpp Knight.h Piece.h Position.h
-	g++ -Wall -g -c Knight.cpp
-
-Bishop.o: Bishop.cpp Bishop.h Piece.h Position.h
-	g++ -Wall -g -c Bishop.cpp
-
-Queen.o: Queen.cpp Queen.h Piece.h Position.h
-	g++ -Wall -g -c Queen.cpp
-
-King.o: King.cpp King.h Piece.h Position.h
-	g++ -Wall -g -c King.cpp
+# automatically imports the dependencies (the included header files)
+-include $(OBJS:.o=.d)
 
 clean:
-	rm -f *.o chess
+	rm -f *.o *.d chess
 
 .PHONY: clean

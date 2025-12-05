@@ -39,19 +39,7 @@ public:
      * @brief Pawns can be blocked.
      * @return True.
      */
-    bool canBeBlocked() const override;
-    
-    /**
-     * @brief Gets all possible move directions for a pawn.
-     * @return Vector of direction pairs for pawn movement.
-     */
-    std::vector<std::pair<int, int>> getMoveDirections() const override;
-    
-    /**
-     * @brief Pawns are not sliding pieces.
-     * @return False.
-     */
-    bool isSliding() const override;
+    bool canBeBlocked() const override {return true;}
 };
 
 #endif // PAWN_H

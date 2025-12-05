@@ -39,19 +39,7 @@ public:
      * @brief Rooks can be blocked.
      * @return True.
      */
-    bool canBeBlocked() const override;
-    
-    /**
-     * @brief Gets all possible move directions for a rook.
-     * @return Vector of direction pairs (horizontal and vertical).
-     */
-    std::vector<std::pair<int, int>> getMoveDirections() const override;
-    
-    /**
-     * @brief Rooks are sliding pieces.
-     * @return True.
-     */
-    bool isSliding() const override;
+    bool canBeBlocked() const override {return true;}
 };
 
 #endif // ROOK_H

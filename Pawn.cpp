@@ -56,33 +56,3 @@ bool Pawn::validMoveDir(const Position& start, const Position& end, bool isCaptu
     
     return false;
 }
-
-/**
- * @brief Pawns can be blocked.
- * @return True.
- */
-bool Pawn::canBeBlocked() const {
-    return true;
-}
-
-/**
- * @brief Gets all possible move directions for a pawn.
- * 
- * Returns diagonal capture directions based on colour.
- * Used for checking if a pawn attacks a square.
- * 
- * @return Vector of direction pairs for pawn attacks.
- */
-std::vector<std::pair<int, int>> Pawn::getMoveDirections() const {
-    int direction = (colour == Colour::WHITE) ? 1 : -1;
-    // Pawns attack diagonally
-    return {{-1, direction}, {1, direction}};
-}
-
-/**
- * @brief Pawns are not sliding pieces.
- * @return False.
- */
-bool Pawn::isSliding() const {
-    return false;
-}
