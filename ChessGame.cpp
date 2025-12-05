@@ -378,25 +378,37 @@ void ChessGame::loadState(const string& fen) {
     int file = 0;
     int rank = 7;  // FEN string starts from highest rank (index 7).
     for (char c : piecePlacement) {
-        /* generate position struct and 
-        then use that to set the pawn's hasMoved var
-        */
         if (c == '/') {
             file = 0;
             --rank;
         } else if (isdigit(c)) {
             file += (c - '0');
         } else {
+            /* generate position struct and 
+            then use that to set the pawn's hasMoved var
+            */
+            Position currentPos(file, rank);
             // Create the piece on the heap.
             Piece* piece = pieceFromChar(c);
-            board[file][rank] = piece;     
+            if (!piece) {
+                cerr << "Error in creating piece, please load in a new board." 
+                << endl;
+                clearBoard();
+                return;
+            } 
+            board[file][rank] = piece;
+
             // If the piece is a king, store its position.
-            if (tolower(c) == 'k') {
-                if (piece->getColour() == Colour::WHITE) {
-                    whiteKingPos = Position(file, rank);
-                } else {
-                    blackKingPos = Position(file, rank);
-                }
+            if (c == 'K') {
+                whiteKingPos = currentPos;
+            } else if (c == 'k') {
+                blackKingPos = currentPos;
+            } 
+            // If the piece is a pawn and it's not on its original rank,
+            // set its hasMoved var.
+            else if ((c == 'P' && rank != 1) ||
+            (c == 'p' && rank != 6)) {  
+                piece->setHasMoved();
             }
             ++file;
         }

@@ -1,8 +1,3 @@
-todo.txt
-
-comments in piece & piece subclasses
-change (void)isCapture (see bishop.cpp)
-
 isMoveLegal() is only called by hasValidMoves()
 hasValidMoves() checks all possible destination squares
 we can restrict the search space by returning
@@ -13,7 +8,3 @@ direction a piece can legally move in
 until it hits an allied piece
 or until (and including) it hits an enemy piece
 make it more polymorphic?
-
-change validMoveDir to just use absFileDiff
-
-if pawn is not on home row, it's moved.

@@ -1,5 +1,6 @@
 *.o
 *.d
 chess
+test
 .vscode
 .idea

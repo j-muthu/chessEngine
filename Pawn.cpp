@@ -18,8 +18,9 @@ bool Pawn::validMoveDir(const Position& start, const Position& end, bool isCaptu
     
     // Otherwise, can advance 1 square, or, if it hasn't moved,
     // 2 squares.
-    if (fileDiff == 0 && (rankDiff == direction ||
-    !hasMoved && rankDiff == 2 * direction)) {
+    if (fileDiff == 0 && 
+        (rankDiff == direction ||
+        (!hasMoved && rankDiff == 2 * direction))) {
         return true;
     }
     
