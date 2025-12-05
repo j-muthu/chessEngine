@@ -4,42 +4,24 @@
 #include "Piece.h"
 
 /**
- * @brief Class representing a Rook chess piece.
- * 
- * Rooks can move any number of squares along rank or file,
- * but cannot leap over other pieces.
+ * @brief Class representing rooks. They can move along ranks and files.
  */
 class Rook : public Piece {
 public:
-    /**
-     * @brief Constructor for Rook.
-     * @param c The colour of the rook.
-     */
+    /** @copydoc Piece::Piece */
     Rook(Colour c);
     
-    /** @copydoc Piece::~Piece() */
+    /** @copydoc Piece::~Piece */
     ~Rook() override;
     
-    /**
-     * @brief Gets the name of the piece.
-     * @return "Rook".
-     */
+    /** @copydoc Piece::getName */
     std::string getName() const override {return "Rook";}
     
-    /**
-     * @brief Checks if the rook can move from start to end position.
-     * @param start The starting position.
-     * @param end The ending position.
-     * @param isCapture True if there's an enemy piece at the end position (not used for rook).
-     * @return True if the movement pattern is valid for a rook.
-     */
+    /** @copydoc Piece::validMoveDir */
     bool validMoveDir(const Position& start, const Position& end, bool isCapture) const override;
     
-    /**
-     * @brief Rooks can be blocked.
-     * @return True.
-     */
+    /** @copydoc Piece::canBeBlocked */
     bool canBeBlocked() const override {return true;}
 };
 
-#endif // ROOK_H
+#endif
