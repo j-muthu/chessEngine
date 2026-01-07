@@ -39,6 +39,22 @@ struct Position {
      * false otherwise.
      */
     bool operator!=(const Position& other) const;
+
+    /**
+     * @brief Addition operator for positions.
+     * @param other The other position to be added.
+     * @return A new position where the file is the sum of the two
+     * operand positions' files, and likewise with the rank.
+     */
+    Position operator+(const Position& other) const;
+
+    /**
+     * @brief Compound assignment operator for positions.
+     * @param other The other position to be added to the current position.
+     * @return The current position where the file has been incremented by the
+     * other positions file, and likewise with the rank.
+     */
+    Position& operator+=(const Position& other);
     
     /**
      * @brief Checks if the position is valid (on the 8x8 board) 

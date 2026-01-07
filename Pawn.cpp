@@ -26,3 +26,21 @@ bool Pawn::validMoveDir(const Position& start, const Position& end, bool isCaptu
     
     return false;
 }
+
+std::vector<Position> Pawn::getMoveablePositions() const {
+    std::vector<Position> moves;
+
+    // Pawns can move ahead one square, or diagonally 1 square
+    // if capturing.
+    int rankInFront = colour == Colour::WHITE ? 1 : -1;
+    for (int file : {-1, 0, 1}) {
+        moves.push_back(Position{file, rankInFront});
+    }
+
+    // If the pawn hasn't moved, it can also move ahead two squares.
+    if (hasMoved) {
+        moves.push_back(Position{0, rankInFront});
+    }
+    
+    return moves;
+}

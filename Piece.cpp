@@ -1,5 +1,6 @@
 #include "Piece.h"
 #include <cmath>
+#include <vector>
 
 using namespace std;
 

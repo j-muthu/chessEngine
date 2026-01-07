@@ -11,3 +11,8 @@ bool Rook::validMoveDir(const Position& start, const Position& end, bool) const 
     // Rook can move along ranks or files.
     return (fileDiff == 0 && rankDiff != 0) || (fileDiff != 0 && rankDiff == 0);
 }
+
+std::vector<Position> Rook::getMoveablePositions() const {
+    // Rook can move any number of squares horizontally or vertically.
+    return {Position{1,0}, Position{0,1}, Position{-1,0}, Position{0,-1}};
+}

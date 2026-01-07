@@ -29,6 +29,7 @@ test: $(TEST_OBJS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # automatically imports the dependencies (the included header files)
+# creates .d dependency files from the object file names
 -include $(COMMON_OBJS:.o=.d) ChessMain.d ChessTest.d
 
 clean:

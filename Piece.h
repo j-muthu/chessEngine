@@ -75,7 +75,8 @@ public:
      * @param start Start position.
      * @param end End position.
      * @param isCapture True if there's an enemy piece at the end position,
-     * false otherwise.
+     * false otherwise. Affects the movement patterns of pawns (and whether
+     * kings can castle).
      * @return True if the movement direction is legal for the piece, false
      * otherwise.
      */
@@ -89,6 +90,26 @@ public:
      * @return True if the piece's path can be blocked, false otherwise.
      */
     virtual bool canBeBlocked() const = 0;
+
+
+    /**
+     * @brief Checks if this piece type can move multiple squares 
+     * in one direction.
+     * @return True for sliding pieces (rook, bishop, queen), 
+     * false otherwise (note this includes the pawn, though it can move
+     * 2 spaces on its first move).
+     */
+    virtual bool isSliding() const = 0;
+
+    /**
+     * @brief Returns a vector of the positions a piece can move to. 
+     * For non-sliding pieces, the vector will be exhaustive. For sliding
+     * pieces, the vector will just contain positions that move one square in
+     * the piece's moveable directions.
+     * @return The vector of positions the piece can move to (only 
+     * single-square moves if the piece is sliding).
+     */
+    virtual std::vector<Position> getMoveablePositions() const = 0;
 };
 
-#endif // PIECE_H
+#endif

@@ -7,10 +7,16 @@ Bishop::~Bishop() {}
 
 // Note that bool, rather than bool isCapture is in the parameter list
 // because it suppresses compiler warnings about unused parameters.
-bool Bishop::validMoveDir(const Position& start, const Position& end, bool) const {
+bool Bishop::validMoveDir(const Position& start, const Position& end, 
+    bool) const {
     int fileDiff = std::abs(end.file - start.file);
     int rankDiff = std::abs(end.rank - start.rank);
     
     // Bishop moves diagonally.
     return fileDiff == rankDiff && fileDiff > 0;
+}
+
+std::vector<Position> Bishop::getMoveablePositions() const {
+    // Bishop can move any number of squares diagonally.
+    return {Position{-1,-1}, Position{-1,1}, Position{1,-1}, Position{1,1}};
 }

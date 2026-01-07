@@ -171,8 +171,7 @@ bool ChessGame::moveLeavesKingInCheck(const Position& start, const Position& end
     return inCheck;
 }
 
-bool ChessGame::moveValidityChecks(const Position& start,
-    const Position& end) {
+bool ChessGame::moveValidityChecks(const Position& start, const Position& end) {
     Piece* piece = getPieceAtPos(start);
     Piece* targetPiece = getPieceAtPos(end);
     bool isCapture = (targetPiece);
@@ -191,8 +190,8 @@ bool ChessGame::moveValidityChecks(const Position& start,
         !moveLeavesKingInCheck(start, end, piece->getColour()));
 }
 
-bool ChessGame::isValidCastling(const Position& start, 
-    const Position& end, bool& kingside) const {
+bool ChessGame::isValidCastling(const Position& start,
+    const Position& end) const {
     Piece* piece = getPieceAtPos(start);
     if ((start != whiteKingPos && start != blackKingPos) ||
         piece->getHasMoved()) {
@@ -201,7 +200,7 @@ bool ChessGame::isValidCastling(const Position& start,
 
     Colour kingColour = piece->getColour();
     int direction = (end.file > start.file) ? 1 : -1;
-    kingside = (direction == 1);
+    bool kingside = (direction == 1);
     // Check whether the king can castle on the implied side.
     // note the <colour>CanCastle<King/Queen>Side implies whether
     // the corresponding rook is at their destination position.
@@ -244,23 +243,6 @@ bool ChessGame::isValidCastling(const Position& start,
     return true;
 }
 
-bool ChessGame::isMoveLegal(const Position& start, const Position& end) {
-    Piece* piece = getPieceAtPos(start);
-    if (!piece) {
-        return false;
-    }
-    
-    // If the move is a castling attempt, check it is valid.
-    if ((start == whiteKingPos || start == blackKingPos) &&
-    abs(end.file - start.file) == 2) {
-        bool kingside = false;
-        return isValidCastling(start, end, kingside);
-    }
-    
-    // Check all other conditions for the move's validity.
-    return moveValidityChecks(start, end);
-}
-
 bool ChessGame::hasLegalMoves(Colour colourToCheck) {
     // Check all pieces of the specified colour
     for (int file = 0; file < 8; file++) {
@@ -268,14 +250,43 @@ bool ChessGame::hasLegalMoves(Colour colourToCheck) {
             
             Piece* piece = board[file][rank];
             if (!piece || piece->getColour() != colourToCheck) continue;
+            Position currentPos{file, rank};
+            // Get all the position offsets the piece can move to.
+            vector<Position> offsetPositions = piece->getMoveablePositions();
 
-            // Try all possible destination squares
-            for (int destFile = 0; destFile < 8; destFile++) {
-                for (int destRank = 0; destRank < 8; destRank++) {
+            // If a piece isn't sliding i.e. can only move a fixed number of 
+            // squares, check the vector of moveable positions exhaustively.
+            if (!piece->isSliding()) {
+                for (const Position& offset : offsetPositions) {
+                    Position targetPos = currentPos + offset;
+                    if (posOnBoard(targetPos) && 
+                    moveValidityChecks(currentPos, targetPos)) {
+                            return true;
+                    }
+                }
+            } 
+            // Otherwise, we need to keep incrementing the move (i.e. sliding
+            // along a particular direction) until we hit an allied piece
+            // or we attempt to capture an enemy piece.
+            else {
+                for (const Position& offset : offsetPositions) {
+                    Position positionAlongDir = currentPos + offset;
+                    Piece* pieceAtTargetLoc = getPieceAtPos(positionAlongDir);
 
-                    if (isMoveLegal(Position(file, rank), 
-                    Position(destFile, destRank))) {
-                        return true;
+                    while (posOnBoard(positionAlongDir) &&
+                    (!pieceAtTargetLoc || 
+                        pieceAtTargetLoc->getColour() != piece->getColour())) {
+
+                        if (moveValidityChecks(currentPos, positionAlongDir)) {
+                            return true;
+                        }
+
+                        if (pieceAtTargetLoc &&
+                        pieceAtTargetLoc->getColour() != piece->getColour()) {
+                            break;
+                        }
+
+                        positionAlongDir += offset;
                     }
                 }
             }
@@ -357,6 +368,11 @@ void ChessGame::checkCheckAndEndgame(Colour c) {
     } else if (inCheck) {
         cout << c << " is in check" << endl;
     }
+}
+
+bool ChessGame::posOnBoard(const Position& pos) const {
+    return (pos.file >= 0 && pos.file <= 7 &&
+    pos.rank >= 0 && pos.rank <= 7);
 }
 
 void ChessGame::loadState(const string& fen) {
@@ -488,12 +504,11 @@ void ChessGame::submitMove(const string& startStr, const string& endStr) {
     // Setting up boolean variables for whether the king is castling.
     bool kingMoving = (start == whiteKingPos || start == blackKingPos);
     bool isCastling = (kingMoving && abs(end.file - start.file) == 2);
-    bool kingside = false;
 
     // Checking the validity of the move,
     // with separate checks for castling and non-castling moves.
     if ((!isCastling && !moveValidityChecks(start, end)) ||
-    (isCastling && !isValidCastling(start, end, kingside))) {
+    (isCastling && !isValidCastling(start, end))) {
         cerr << piece->getColour() << "'s " << piece->getName() 
                 << " cannot move to " << end << "!" << endl;
         return;
@@ -509,7 +524,7 @@ void ChessGame::submitMove(const string& startStr, const string& endStr) {
         << "'s " << targetPiece->getName();
     } else if (isCastling) {
         cout << " castling";
-        if (kingside) {
+        if (end.file > start.file) {
             cout << " kingside";
         } else {
             cout << " queenside";
@@ -517,9 +532,13 @@ void ChessGame::submitMove(const string& startStr, const string& endStr) {
     }
     cout << endl;
 
-    // Delete the piece if one was captured.
     Piece* capturedPiece = nullptr;
+
+    // Make the move and update the pointer to the captured piece
+    // if one was captured.
     makeMove(start, end, capturedPiece);
+
+    // Delete the piece if one was captured.
     if (capturedPiece) delete capturedPiece;
     
     // Switch active colour.

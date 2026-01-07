@@ -23,6 +23,12 @@ public:
     
     /** @copydoc Piece::canBeBlocked */
     bool canBeBlocked() const override {return true;}
+
+    /** @copydoc Piece::isSliding() */
+    bool isSliding() const override {return true;}
+
+    /** @copydoc Piece::getMoveablePositions() */
+    std::vector<Position> getMoveablePositions() const override;
 };
 
 #endif

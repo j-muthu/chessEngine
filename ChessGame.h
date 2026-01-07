@@ -99,12 +99,12 @@ private:
         Colour movingColour);
     
     /**
-     * @brief Helper function for whether a given chess move is valid 
-     * according to 4 criteria:
-     * - a piece cannot capture an allied piece, nor a king.
-     * - a piece must be able to move in the given direction,
-     * - a piece must not be blocked by other pieces from making a move. 
-     * - a piece cannot leave the allied king in check.
+     * @brief Returns whether a given chess move is valid according to 
+     * 4 criteria:
+     *  - a piece cannot capture an allied piece, nor a king.
+     *  - a piece must be able to move in the given direction,
+     *  - a piece must not be blocked by other pieces from making a move. 
+     *  - a piece cannot leave the allied king in check.
      * @param start The starting position.
      * @param end The ending position.
      * @return True if the move is valid according to the 4 criteria, false
@@ -116,12 +116,9 @@ private:
      * @brief Checks if a given move by the king is a valid attempt to castle.
      * @param start The king's starting position.
      * @param end The king's ending position.
-     * @param kingside Whether the castling attempt is kingside or queenside.
-     * This boolean is updated within the method.
      * @return True if the move is a valid castle, false otherwise.
      */
-    bool isValidCastling(const Position& start, const Position& end, 
-        bool& kingside) const;
+    bool isValidCastling(const Position& start, const Position& end) const;
     
     /**
      * @brief Checks if the specified colour has any legal moves available.
@@ -129,16 +126,6 @@ private:
      * @return True if at least one legal move exists, false otherwise.
      */
     bool hasLegalMoves(Colour colourToCheck);
-    
-    /**
-     * @brief Checks if a specific move is legal. Note this function does not
-     * actually make the move, nor does it check the colour 
-     * of the moving piece.
-     * @param start Start position.
-     * @param end End position.
-     * @return True if the move is legal, false otherwise.
-     */
-    bool isMoveLegal(const Position& start, const Position& end);
     
     /**
      * @brief Executes a specified move on the board. Note this function 
@@ -176,6 +163,14 @@ private:
         return (c == Colour::WHITE) ? Colour::BLACK : Colour::WHITE;
     }
 
+    /**
+     * @brief Returns whether a given position is on the board or not.
+     * @param pos The position to be checked.
+     * @return True if the position is on the chessboard (i.e. file and
+     * rank are both between 0-7 inclusive), false otherwise.
+     */
+    bool posOnBoard(const Position& pos) const;
+
 public:
     /**
      * @brief Default constructor, initialising an empty chess game.
@@ -211,4 +206,4 @@ public:
     void submitMove(const std::string& startStr, const std::string& endStr);
 };
 
-#endif // CHESSGAME_H
+#endif

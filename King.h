@@ -19,10 +19,17 @@ public:
     std::string getName() const override {return "King";}
 
     /** @copydoc Piece::validMoveDir */
-    bool validMoveDir(const Position& start, const Position& end, bool isCapture) const override;
+    bool validMoveDir(const Position& start, const Position& end, 
+        bool isCapture) const override;
     
     /** @copydoc Piece::canBeBlocked */
     bool canBeBlocked() const override {return false;}
+
+    /** @copydoc Piece::isSliding() */
+    bool isSliding() const override {return false;}
+
+    /** @copydoc Piece::getMoveablePositions() */
+    std::vector<Position> getMoveablePositions() const override;
     
     /**
      * @brief Checks if the given move is a castling attempt.
